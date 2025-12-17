@@ -1,4 +1,4 @@
-## This is the first End to End MLOps Powered Load Forecasting pipeline for a site
+## First End to End MLOps Powered Load Forecasting - Technos Site
 
 1. We will try to follow standard MLOps steps for developing this Forecasting Project.
 2. A separate module (.py script) for each functionality. For e.g., data loading, preprocessing, training and evaluation
