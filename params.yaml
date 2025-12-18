@@ -1,0 +1,56 @@
+preprocess:
+  input: data/raw/technos_data_23aug_22sept.csv
+  input_temperature: data/raw/aichi_temp.csv
+  output: data/processed/processed_data.csv
+  drop_rows: 11
+  start_date: "2025-08-23 02:00:00"
+  end_date: "2025-09-21 13:00:00"
+  lag_time: 5
+  temperature: 
+    encoding: cp932
+    skiprows: 3
+
+train:
+  model_type: xgboost
+  data: data/processed/processed_data.csv
+  model: models/model.pkl
+  feature_cols:
+    - Hour
+    - Average_Temperature_C
+    - Day_of_Week
+    - Month
+    - DayOfYear
+    - netload_lag1
+    - netload_lag2
+    - netload_lag3
+    - netload_lag4
+    - netload_lag5  
+  target_col: netload
+  train_size: 0.7
+  val_size: 0.15
+  random_state: 42
+  n_estimators: [100, 200]
+  max_depth: [3,5,7]
+  learning_rate: [0.01, 0.1, 0.2]
+  subsample: [0.8, 1.0]
+  cyclical_features: False
+
+evaluate:
+  data: data/processed/processed_data.csv
+  model: models/model.pkl
+  train_size: 0.7
+  val_size: 0.15
+  test_size: 0.15
+  random_state: 42
+    feature_cols:
+    - Hour
+    - Average_Temperature_C
+    - Day_of_Week
+    - Month
+    - DayOfYear
+    - netload_lag1
+    - netload_lag2
+    - netload_lag3
+    - netload_lag4
+    - netload_lag5  
+  target_col: netload
