@@ -1,0 +1,13 @@
+# Ignore data files as they are only tracked by DVC
+data/raw
+data/processed
+
+# Ignore virtual environment folders
+venv/
+.env/
+technos_mlops_env/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
