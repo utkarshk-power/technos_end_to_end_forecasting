@@ -1,0 +1,35 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw/aichi_temp.csv
+      hash: md5
+      md5: b65fa9ab078b87a24e369a56ac0cffe3
+      size: 20514
+    - path: data/raw/technos_data_23aug_22sept.csv
+      hash: md5
+      md5: f7d055259b81677c4aeae9d1f370a062
+      size: 185779
+    - path: src/preprocess.py
+      hash: md5
+      md5: 5ef1f06d23f6355b81c1330b20dde56f
+      size: 4956
+    params:
+      params.yaml:
+        preprocess:
+          input_temperature: data/raw/aichi_temp.csv
+          input: data/raw/technos_data_23aug_22sept.csv
+          output: data/processed/processed_data.csv
+          drop_rows: 11
+          start_date: '2025-08-23 02:00:00'
+          end_date: '2025-09-21 13:00:00'
+          lag_time: 5
+          temperature:
+            encoding: cp932
+            skiprows: 3
+    outs:
+    - path: ./data/processed/processed_data.csv
+      hash: md5
+      md5: c5927fa92398d937530b18864f2192a2
+      size: 148737

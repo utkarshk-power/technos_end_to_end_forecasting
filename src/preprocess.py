@@ -19,8 +19,8 @@ def preprocess_(input_path, temperature_input_path, encoding, drop_rows):
     if missing:
         raise ValueError(f"Missing columns: {missing}")
     temperature_data = pd.read_csv(temperature_input_path,
-                                   encoding=encoding['temperature']['encoding'], 
-                                   skiprows=encoding['temperature']['skiprows'])
+                                   encoding=encoding['encoding'], 
+                                   skiprows=encoding['skiprows'])
     tabular_data['_time'] = pd.to_datetime(tabular_data['_time'])
     tabular_data_updated = tabular_data.pivot_table(
         index='_time',

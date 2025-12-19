@@ -1,0 +1,11 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - data/raw/aichi_temp.csv
+    - data/raw/technos_data_23aug_22sept.csv
+    - src/preprocess.py
+    params:
+    - preprocess
+    outs:
+    - ./data/processed/processed_data.csv

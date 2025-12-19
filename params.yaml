@@ -1,6 +1,6 @@
 preprocess:
-  input: data/raw/technos_data_23aug_22sept.csv
   input_temperature: data/raw/aichi_temp.csv
+  input: data/raw/technos_data_23aug_22sept.csv
   output: data/processed/processed_data.csv
   drop_rows: 11
   start_date: "2025-08-23 02:00:00"
@@ -42,7 +42,7 @@ evaluate:
   val_size: 0.15
   test_size: 0.15
   random_state: 42
-    feature_cols:
+  feature_cols:
     - Hour
     - Average_Temperature_C
     - Day_of_Week
