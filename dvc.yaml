@@ -17,3 +17,12 @@ stages:
     - src/train.py
     outs:
     - models/model.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/processed/processed_data.csv
+    - models/model.pkl
+    - src/evaluate.py
+    params:
+    - evaluate

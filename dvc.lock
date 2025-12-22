@@ -53,3 +53,39 @@ stages:
       hash: md5
       md5: f37124f978ef7bf2c29c3a74fab2a3eb
       size: 233174
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: e2b992733c6e69276aeed925d3d30376
+      size: 151636
+    - path: models/model.pkl
+      hash: md5
+      md5: f37124f978ef7bf2c29c3a74fab2a3eb
+      size: 233174
+    - path: src/evaluate.py
+      hash: md5
+      md5: fb4e13b5e9a261041dd64d3d2a7cb387
+      size: 1867
+    params:
+      params.yaml:
+        evaluate:
+          data: data/processed/processed_data.csv
+          model: models/model.pkl
+          train_size: 0.7
+          val_size: 0.15
+          test_size: 0.15
+          random_state: 42
+          feature_cols:
+          - Hour
+          - Average_Temperature_C
+          - Day_of_Week
+          - Month
+          - DayOfYear
+          - netload_lag1
+          - netload_lag2
+          - netload_lag3
+          - netload_lag4
+          - netload_lag5
+          target_col: netload
