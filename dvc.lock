@@ -13,8 +13,8 @@ stages:
       size: 185779
     - path: src/preprocess.py
       hash: md5
-      md5: 5ef1f06d23f6355b81c1330b20dde56f
-      size: 4956
+      md5: b443b61fdeeeb3ed9b0d8ba70b282327
+      size: 4932
     params:
       params.yaml:
         preprocess:
@@ -31,5 +31,25 @@ stages:
     outs:
     - path: ./data/processed/processed_data.csv
       hash: md5
-      md5: c5927fa92398d937530b18864f2192a2
-      size: 148737
+      md5: e2b992733c6e69276aeed925d3d30376
+      size: 151636
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: e2b992733c6e69276aeed925d3d30376
+      size: 151636
+    - path: params.yaml
+      hash: md5
+      md5: 42cbe8639097f17659971bb2e21a3a9c
+      size: 1177
+    - path: src/train.py
+      hash: md5
+      md5: 135e4090f282f23ae6c351d4cf71fbc4
+      size: 4461
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: f37124f978ef7bf2c29c3a74fab2a3eb
+      size: 233174

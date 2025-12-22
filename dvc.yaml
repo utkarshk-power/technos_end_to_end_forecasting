@@ -9,3 +9,11 @@ stages:
     - preprocess
     outs:
     - ./data/processed/processed_data.csv
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/processed/processed_data.csv
+    - params.yaml
+    - src/train.py
+    outs:
+    - models/model.pkl
