@@ -26,3 +26,19 @@ stages:
     - src/evaluate.py
     params:
     - evaluate
+  testing:
+    cmd: pytest
+    deps:
+    - data/aichi_temperature_forecast.csv
+    - data/inference_input_data.csv
+    - data/inference_lag_data.csv
+    - data/processed_data.csv
+    - inference.yaml
+    - models/model.pkl
+    - params.yaml
+    - src
+    - tests
+    - tests/test_deployment.py
+    - tests/test_preprocess.py
+    outs:
+    - test_reports/test_results.txt
