@@ -40,14 +40,12 @@ stages:
     - params.yaml
     - src
     - tests
-    - tests/test_deployment.py
-    - tests/test_preprocess.py
     outs:
     - test_reports/test_results.txt
   docker_build:
     cmd: docker build -t technos-forecast:latest .
     deps:
-    - /docker/entrypoint.sh
+    - docker/entrypoint.sh
     - Dockerfile
     - inference.yaml
     - models/model.pkl
