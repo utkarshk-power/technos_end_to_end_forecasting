@@ -26,8 +26,9 @@ stages:
     - src/evaluate.py
     params:
     - evaluate
+
   testing:
-    cmd: pytest
+    cmd: pytest PYTHONPATH=. pytest -q tests
     deps:
     - data/processed/aichi_temperature_forecast.csv
     - data/processed/inference_input_data.csv
