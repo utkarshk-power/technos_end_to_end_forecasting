@@ -29,10 +29,10 @@ stages:
   testing:
     cmd: pytest
     deps:
-    - data/aichi_temperature_forecast.csv
-    - data/inference_input_data.csv
-    - data/inference_lag_data.csv
-    - data/processed_data.csv
+    - data/processed/aichi_temperature_forecast.csv
+    - data/processed/inference_input_data.csv
+    - data/processed/inference_lag_data.csv
+    - data/processed/processed_data.csv
     - inference.yaml
     - models/model.pkl
     - params.yaml
