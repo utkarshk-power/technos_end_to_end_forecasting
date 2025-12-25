@@ -89,3 +89,58 @@ stages:
           - netload_lag4
           - netload_lag5
           target_col: netload
+  testing:
+    cmd: bash -lc 'mkdir -p test_reports && PYTHONPATH=. pytest -q tests | tee 
+      test_reports/test_results.txt'
+    deps:
+    - path: data/processed/aichi_temperature_forecast.csv
+      hash: md5
+      md5: 77a255f05cc39657565033828152e34d
+      size: 2428
+    - path: data/processed/inference_input_data.csv
+      hash: md5
+      md5: fd11a2c760e26f8cc603ea83f92656ab
+      size: 1746
+    - path: data/processed/inference_lag_data.csv
+      hash: md5
+      md5: 8b23bb3161e5d1a5c4bb4bc07091b3e6
+      size: 1325
+    - path: data/processed/processed_data.csv
+      hash: md5
+      md5: e2b992733c6e69276aeed925d3d30376
+      size: 151636
+    - path: inference.yaml
+      hash: md5
+      md5: 97e42ff1cd99c60df2433361e9ea8283
+      size: 1334
+    - path: models/model.pkl
+      hash: md5
+      md5: f37124f978ef7bf2c29c3a74fab2a3eb
+      size: 233174
+    - path: params.yaml
+      hash: md5
+      md5: 42cbe8639097f17659971bb2e21a3a9c
+      size: 1177
+    - path: src
+      hash: md5
+      md5: a8931c7c3c01d55463d7bf5ebfcf77b4.dir
+      size: 22243
+      nfiles: 10
+    - path: tests
+      hash: md5
+      md5: b0f213f4e61507d49a0937b40db93572.dir
+      size: 2725
+      nfiles: 2
+    - path: tests/test_deployment.py
+      hash: md5
+      md5: 589bff36e894f285c263bb3924f90efb
+      size: 1602
+    - path: tests/test_preprocess.py
+      hash: md5
+      md5: 0d75c7f7530a15bf10a9f3a3f241ccee
+      size: 1123
+    outs:
+    - path: test_reports/test_results.txt
+      hash: md5
+      md5: cb7735dfe4af33ddc8884e2477a62bc9
+      size: 1365

@@ -28,7 +28,7 @@ stages:
     - evaluate
 
   testing:
-    cmd: pytest PYTHONPATH=. pytest -q tests
+    cmd: bash -lc 'mkdir -p test_reports && PYTHONPATH=. pytest -q tests | tee test_reports/test_results.txt'
     deps:
     - data/processed/aichi_temperature_forecast.csv
     - data/processed/inference_input_data.csv
