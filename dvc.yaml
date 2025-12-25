@@ -28,7 +28,8 @@ stages:
     - evaluate
 
   testing:
-    cmd: bash -lc 'mkdir -p test_reports && PYTHONPATH=. pytest -q tests | tee test_reports/test_results.txt'
+    cmd: bash -lc 'mkdir -p test_reports && PYTHONPATH=. pytest -q tests | tee 
+      test_reports/test_results.txt'
     deps:
     - data/processed/aichi_temperature_forecast.csv
     - data/processed/inference_input_data.csv
@@ -43,3 +44,13 @@ stages:
     - tests/test_preprocess.py
     outs:
     - test_reports/test_results.txt
+  docker_build:
+    cmd: docker build -t technos-forecast:latest .
+    deps:
+    - /docker/entrypoint.sh
+    - Dockerfile
+    - inference.yaml
+    - models/model.pkl
+    - params.yaml
+    - requirements.infer.txt
+    - src
