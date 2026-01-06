@@ -28,6 +28,7 @@ stages:
           temperature:
             encoding: cp932
             skiprows: 3
+            nrows: 100
     outs:
     - path: ./data/processed/processed_data.csv
       hash: md5
@@ -42,8 +43,8 @@ stages:
       size: 151636
     - path: params.yaml
       hash: md5
-      md5: 42cbe8639097f17659971bb2e21a3a9c
-      size: 1177
+      md5: 8307fe295b20539471a641f4c8175d8d
+      size: 1192
     - path: src/train.py
       hash: md5
       md5: 135e4090f282f23ae6c351d4cf71fbc4
@@ -51,8 +52,8 @@ stages:
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: f37124f978ef7bf2c29c3a74fab2a3eb
-      size: 233174
+      md5: aa49005e10611d17d7e5ee79963da88f
+      size: 439149
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -62,8 +63,8 @@ stages:
       size: 151636
     - path: models/model.pkl
       hash: md5
-      md5: f37124f978ef7bf2c29c3a74fab2a3eb
-      size: 233174
+      md5: aa49005e10611d17d7e5ee79963da88f
+      size: 439149
     - path: src/evaluate.py
       hash: md5
       md5: fb4e13b5e9a261041dd64d3d2a7cb387
@@ -115,12 +116,12 @@ stages:
       size: 1334
     - path: models/model.pkl
       hash: md5
-      md5: f37124f978ef7bf2c29c3a74fab2a3eb
-      size: 233174
+      md5: aa49005e10611d17d7e5ee79963da88f
+      size: 439149
     - path: params.yaml
       hash: md5
-      md5: 42cbe8639097f17659971bb2e21a3a9c
-      size: 1177
+      md5: 8307fe295b20539471a641f4c8175d8d
+      size: 1192
     - path: src
       hash: md5
       md5: a8931c7c3c01d55463d7bf5ebfcf77b4.dir
@@ -131,16 +132,40 @@ stages:
       md5: b0f213f4e61507d49a0937b40db93572.dir
       size: 2725
       nfiles: 2
-    - path: tests/test_deployment.py
-      hash: md5
-      md5: 589bff36e894f285c263bb3924f90efb
-      size: 1602
-    - path: tests/test_preprocess.py
-      hash: md5
-      md5: 0d75c7f7530a15bf10a9f3a3f241ccee
-      size: 1123
     outs:
     - path: test_reports/test_results.txt
       hash: md5
-      md5: cb7735dfe4af33ddc8884e2477a62bc9
+      md5: 4034218ae2794c3158e7ba42f9da9177
       size: 1365
+  docker_build:
+    cmd: docker build -t technos-forecast:latest .
+    deps:
+    - path: Dockerfile
+      hash: md5
+      md5: cef27d3d241ace533a2c14297d818f92
+      size: 376
+    - path: docker/entrypoint.sh
+      hash: md5
+      md5: 0a45a3efc497d10e62e63d5a1cb6ed93
+      size: 142
+    - path: inference.yaml
+      hash: md5
+      md5: 97e42ff1cd99c60df2433361e9ea8283
+      size: 1334
+    - path: models/model.pkl
+      hash: md5
+      md5: aa49005e10611d17d7e5ee79963da88f
+      size: 439149
+    - path: params.yaml
+      hash: md5
+      md5: 8307fe295b20539471a641f4c8175d8d
+      size: 1192
+    - path: requirements.infer.txt
+      hash: md5
+      md5: f0c3c533c475b5fccb68cf32ddc76bd0
+      size: 155
+    - path: src
+      hash: md5
+      md5: a8931c7c3c01d55463d7bf5ebfcf77b4.dir
+      size: 22243
+      nfiles: 10
