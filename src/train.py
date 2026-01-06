@@ -21,7 +21,7 @@ def prepare_train_test_data(data_path, feature_cols,
                             random_state):
     data = pd.read_csv(data_path)
     x = data[feature_cols] 
-    y = data[target_col].values.ravel()
+    y = data[target_col]
     split_idx = int(train_size * len(data))
     split_idx_val = int((train_size + val_size) * len(data))
     x_train, x_eval = x.iloc[0:split_idx], x.iloc[split_idx:split_idx_val]

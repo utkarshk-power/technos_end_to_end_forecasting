@@ -1,0 +1,52 @@
+## YAML file for inference stage in Load Forecasting
+temperature:
+  latitude: 35.1802
+  longitude: 136.9066
+  hourly: temperature_2m
+  timezone: Asia/Tokyo
+  forecast_horizon_days: 3
+  api_url: "https://api.open-meteo.com/v1/forecast"
+  output: data/processed/aichi_temperature_forecast.csv
+
+lag_data:
+  bucket_name: "PXC"
+  api_token: "GghMwdt9JGmDRtUdG4iDPZVVG7oky4keWJ0VT3rowB09JzMKWnN1kQDsWaoy4DNMZBDE479pWnUEbJXS0fAULQ=="
+  url: "http://18-180-169-170.napter.soracom.io:37088"
+  org: "PXC"
+  load_fields:
+    - "essPcsActvPwr"
+    - "poiActvPwr"
+    - "pvActvPwr"
+  output: data/processed/inference_lag_data.csv
+  lag_start_date: "2025-12-24 11:00:00"
+  lag_end_date: "2025-12-24 16:00:00"
+
+preprocess_infer:
+  input_temperature: data/processed/aichi_temperature_forecast.csv
+  input_load: data/processed/inference_lag_data.csv
+  output: data/processed/inference_input_data.csv
+  lag_time: 5
+  cols_needed:
+    - Hour
+    - Average_Temperature_C
+    - Day_of_Week
+    - Month
+    - DayOfYear
+    - netload_lag1
+    - netload_lag2
+    - netload_lag3
+    - netload_lag4
+    - netload_lag5
+  temp_start_date: "2025-12-24 17:00:00"
+  temp_end_date: "2025-12-27 16:00:00"
+
+predict:
+  model: models/model.pkl
+  input: data/processed/inference_input_data.csv
+  output: data/predictions/inference_predictions.csv
+  resume: true
+
+
+
+
+    

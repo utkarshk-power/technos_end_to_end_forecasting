@@ -64,7 +64,7 @@ def process_time(merged_dataframe, lag_time, lag_data):
     merged_dataframe['time'] = merged_dataframe['time'].astype(str)
     merged_dataframe['Datetime'] = pd.to_datetime(merged_dataframe['time'])
     merged_dataframe['Hour'] = merged_dataframe['Datetime'].dt.hour
-    merged_dataframe['DayOfWeek'] = merged_dataframe['Datetime'].dt.day
+    merged_dataframe['Day_of_Week'] = merged_dataframe['Datetime'].dt.day
     merged_dataframe['Month'] = merged_dataframe['Datetime'].dt.month
     merged_dataframe['DayOfYear'] = merged_dataframe['Datetime'].dt.year
     if lag_data is None:
@@ -82,7 +82,7 @@ def process_time(merged_dataframe, lag_time, lag_data):
 if __name__ == "__main__":
     merged_dataframe = merge_temperature_data(params['start_date'], params['end_date'], params['input'], params['input_temperature'], params['temperature'], params['drop_rows'])
     processed_dataframe = process_time(merged_dataframe, params['lag_time'], None)
-    processed_dataframe.to_csv(params['output'], header=None, index=False)
+    processed_dataframe.to_csv(params['output'])
     print("Preprocessing complete. Processed data saved to:", params['output'])
     logging.info("Preprocessing complete. Processed data saved to: %s", params['output'])
 

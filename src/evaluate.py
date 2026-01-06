@@ -15,7 +15,7 @@ with open("params.yaml", "rb") as file:
 def evaluate_model(data_path, feature_cols, target_col, model_path, test_size, random_state):
     data=pd.read_csv(data_path)
     x= data[feature_cols]
-    y = data[target_col].values.ravel()
+    y = data[target_col]
     split_idx = int((1 - test_size) * len(data))
     x_test = x.iloc[split_idx:]
     y_test = y.iloc[split_idx:]

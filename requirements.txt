@@ -1,3 +1,9 @@
-mlflow<3
+mlflow
 dvc
 pandas
+xgboost
+numpy
+scikit-learn
+openmeteo-requests
+requests-cache
+retry-requests

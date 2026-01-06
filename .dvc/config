@@ -1,2 +1,4 @@
+[core]
+    remote = origin
 ['remote "origin"']
     url = https://dagshub.com/utkarshk-power/technos_end_to_end_forecasting.dvc

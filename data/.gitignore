@@ -1,1 +1,8 @@
+# Ignore data files as they are only tracked by DVC
 /raw
+/processed
+
+# Ignore virtual environment folders
+/.venv
+/env
+technos_mlops_env/
