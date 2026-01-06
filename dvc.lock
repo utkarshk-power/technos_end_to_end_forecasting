@@ -162,8 +162,8 @@ stages:
       size: 1192
     - path: requirements.infer.txt
       hash: md5
-      md5: f0c3c533c475b5fccb68cf32ddc76bd0
-      size: 155
+      md5: fb74b5a9a262b66a2719fdfc8d59be7b
+      size: 166
     - path: src
       hash: md5
       md5: a8931c7c3c01d55463d7bf5ebfcf77b4.dir
