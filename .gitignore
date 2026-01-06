@@ -11,3 +11,6 @@ technos_mlops_env/
 __pycache__/
 *.pyc
 
+.cache.sqlite
+test_reports
+
