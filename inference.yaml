@@ -3,23 +3,23 @@ temperature:
   latitude: 35.1802
   longitude: 136.9066
   hourly: temperature_2m
-  timezone: Asia/Tokyo
+  timezone: UTC
   forecast_horizon_days: 3
   api_url: "https://api.open-meteo.com/v1/forecast"
   output: data/processed/aichi_temperature_forecast.csv
 
 lag_data:
   bucket_name: "PXC"
-  api_token: "GghMwdt9JGmDRtUdG4iDPZVVG7oky4keWJ0VT3rowB09JzMKWnN1kQDsWaoy4DNMZBDE479pWnUEbJXS0fAULQ=="
-  url: "http://18-180-169-170.napter.soracom.io:37088"
+  api_token: "fxrYNTBiuBeHlAs4liTM9nh4p15AbLq_9y-mrduh6qb0lNjXnqOlng9wJJUKDvAFAkHeJ4-2Qmb0UCotfeUsjw=="
+  url: "http://52-192-90-22.napter.soracom.io:43095"
   org: "PXC"
   load_fields:
     - "essPcsActvPwr"
     - "poiActvPwr"
     - "pvActvPwr"
   output: data/processed/inference_lag_data.csv
-  lag_start_date: "2025-12-24 11:00:00"
-  lag_end_date: "2025-12-24 16:00:00"
+  lag_start_date: "2026-1-08 07:00:00"
+  lag_end_date: "2026-1-08 12:00:00"
 
 preprocess_infer:
   input_temperature: data/processed/aichi_temperature_forecast.csv
@@ -37,14 +37,14 @@ preprocess_infer:
     - netload_lag3
     - netload_lag4
     - netload_lag5
-  temp_start_date: "2025-12-24 17:00:00"
-  temp_end_date: "2025-12-27 16:00:00"
+  temp_start_date: "2026-1-8 13:00:00"
+  temp_end_date: "2026-1-11 12:00:00"
 
 predict:
   model: models/model.pkl
   input: data/processed/inference_input_data.csv
-  output: data/predictions/inference_predictions.csv
-  resume: true
+  output: data/predictions/inference_predictions_
+  resume: false
 
 
 

@@ -96,24 +96,24 @@ stages:
     deps:
     - path: data/processed/aichi_temperature_forecast.csv
       hash: md5
-      md5: 77a255f05cc39657565033828152e34d
-      size: 2428
+      md5: 060fdaac51304596466006ddcb9d7863
+      size: 2433
     - path: data/processed/inference_input_data.csv
       hash: md5
-      md5: fd11a2c760e26f8cc603ea83f92656ab
-      size: 1746
+      md5: 3dc095094e185dbd785dbb6cf20ae3b8
+      size: 1653
     - path: data/processed/inference_lag_data.csv
       hash: md5
-      md5: 8b23bb3161e5d1a5c4bb4bc07091b3e6
-      size: 1325
+      md5: 0bc5a73cb7a57833ca6640cedbdbba6e
+      size: 1378
     - path: data/processed/processed_data.csv
       hash: md5
       md5: e2b992733c6e69276aeed925d3d30376
       size: 151636
     - path: inference.yaml
       hash: md5
-      md5: 97e42ff1cd99c60df2433361e9ea8283
-      size: 1334
+      md5: 4cf2633dfbc454399950a716c4f4e389
+      size: 1318
     - path: models/model.pkl
       hash: md5
       md5: aa49005e10611d17d7e5ee79963da88f
@@ -124,9 +124,9 @@ stages:
       size: 1192
     - path: src
       hash: md5
-      md5: a8931c7c3c01d55463d7bf5ebfcf77b4.dir
-      size: 22243
-      nfiles: 10
+      md5: 5001dcb7fe75eb758a0d22ff8bd61c76.dir
+      size: 23152
+      nfiles: 11
     - path: tests
       hash: md5
       md5: b0f213f4e61507d49a0937b40db93572.dir
@@ -135,7 +135,7 @@ stages:
     outs:
     - path: test_reports/test_results.txt
       hash: md5
-      md5: 4034218ae2794c3158e7ba42f9da9177
+      md5: 5851615606d71da828d8f52b23cba5bf
       size: 1365
   docker_build:
     cmd: docker build -t technos-forecast:latest .
@@ -146,12 +146,12 @@ stages:
       size: 376
     - path: docker/entrypoint.sh
       hash: md5
-      md5: 0a45a3efc497d10e62e63d5a1cb6ed93
-      size: 142
+      md5: de57ce22679f637a110dbf0ac16dd725
+      size: 222
     - path: inference.yaml
       hash: md5
-      md5: 97e42ff1cd99c60df2433361e9ea8283
-      size: 1334
+      md5: 4cf2633dfbc454399950a716c4f4e389
+      size: 1318
     - path: models/model.pkl
       hash: md5
       md5: aa49005e10611d17d7e5ee79963da88f
@@ -162,10 +162,10 @@ stages:
       size: 1192
     - path: requirements.infer.txt
       hash: md5
-      md5: fb74b5a9a262b66a2719fdfc8d59be7b
-      size: 166
+      md5: 717b24e313aea6277750b384b35d58e4
+      size: 117
     - path: src
       hash: md5
-      md5: a8931c7c3c01d55463d7bf5ebfcf77b4.dir
-      size: 22243
-      nfiles: 10
+      md5: 5001dcb7fe75eb758a0d22ff8bd61c76.dir
+      size: 23152
+      nfiles: 11

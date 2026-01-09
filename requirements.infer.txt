@@ -7,6 +7,4 @@ influxdb-client
 openmeteo-requests
 requests-cache
 retry-requests
-openmeteo-requests
-requests-cache
-retry-requests
+matplotlib

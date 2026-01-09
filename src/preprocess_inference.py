@@ -46,8 +46,16 @@ def load_temperature_forecast(path):
     start_date = inference_params.get("temp_start_date")
     end_date = inference_params.get("temp_end_date")
     if start_date and end_date:
-        start = pd.Timestamp(start_date).tz_localize("UTC")
-        end = pd.Timestamp(end_date).tz_localize("UTC")
+        start = pd.Timestamp(start_date)
+        end = pd.Timestamp(end_date)
+        if start.tzinfo is None:
+            start = start.tz_localize("UTC")
+        else:
+            start = start.tz_convert("UTC")
+        if end.tzinfo is None:
+            end = end.tz_localize("UTC")
+        else:
+            end = end.tz_convert("UTC")
         data = data[(data["time"] >= start) & (data["time"] <= end)]
 
     data["Average_Temperature_C"] = data["Average_Temperature_C"].astype(float)

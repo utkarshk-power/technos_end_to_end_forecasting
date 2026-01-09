@@ -2,6 +2,8 @@
 
 import logging
 import os
+import re
+from glob import glob
 
 import joblib
 import pandas as pd
@@ -111,29 +113,6 @@ def iterative_predict(model, forecast_data, lag_state, feature_cols):
     return pd.DataFrame(predictions)
 
 
-def load_resume_state(output_path, lag_time, lag_state, forecast_data):
-    if not output_path or not os.path.exists(output_path):
-        return lag_state, forecast_data, None
-
-    existing = pd.read_csv(output_path)
-    existing = _drop_extra_index_cols(existing)
-    if existing.empty or "predicted_netload" not in existing.columns:
-        return lag_state, forecast_data, None
-
-    existing["time"] = pd.to_datetime(existing["time"], errors="coerce")
-    existing = existing.dropna(subset=["time"]).sort_values("time")
-    if existing.empty:
-        return lag_state, forecast_data, None
-
-    predicted_values = existing["predicted_netload"].astype(float).tolist()
-    lag_state = list(lag_state) + predicted_values
-    lag_state = lag_state[-lag_time:]
-
-    last_time = existing["time"].iloc[-1]
-    forecast_data = forecast_data[forecast_data["time"] > last_time]
-    return lag_state, forecast_data, last_time
-
-
 def make_predictions():
     preprocess_cfg = inference_params["preprocess_infer"]
     predict_cfg = inference_params["predict"]
@@ -143,24 +122,28 @@ def make_predictions():
     lag_state = load_lag_values(preprocess_cfg["input_load"], lag_time)
     forecast_data = load_forecast_input(predict_cfg["input"])
     feature_cols = preprocess_cfg.get("cols_needed", train_params["feature_cols"])
-    resume_enabled = predict_cfg.get("resume", False)
-
-    if resume_enabled:
-        lag_state, forecast_data, last_time = load_resume_state(
-            predict_cfg.get("output"), lag_time, lag_state, forecast_data
-        )
-        if last_time is not None:
-            logging.info("Resuming after last predicted time: %s", last_time)
-
     predictions = iterative_predict(model, forecast_data, lag_state, feature_cols)
-    output_path = predict_cfg["output"]
+    if "time" in predictions.columns:
+        times = pd.to_datetime(predictions["time"], errors="coerce")
+        if times.dt.tz is None:
+            times = times.dt.tz_localize("UTC")
+        predictions["time"] = times.dt.tz_convert("Asia/Tokyo").dt.tz_localize(None)
+    predict_time_start = inference_params["preprocess_infer"]["temp_start_date"]
+    predict_time_start = predict_time_start.replace(":", "-")
+    predict_time_start = predict_time_start.replace(" ", "_")
+    base_path = predict_cfg["output"] + predict_time_start
+    output_path = base_path + ".csv"
+    if os.path.exists(output_path):
+        existing = glob(f"{base_path}*.csv")
+        pattern = re.compile(rf"^{re.escape(base_path)}_(\d+)\.csv$")
+        max_suffix = 0
+        for path in existing:
+            match = pattern.match(path)
+            if match:
+                max_suffix = max(max_suffix, int(match.group(1)))
+        output_path = f"{base_path}_{max_suffix + 1}.csv"
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    if resume_enabled and predict_cfg.get("output") and os.path.exists(predict_cfg["output"]):
-        existing = pd.read_csv(output_path)
-        combined = pd.concat([existing, predictions], ignore_index=True)
-        combined.to_csv(output_path, index=False)
-    else:
-        predictions.to_csv(output_path, index=False)
+    predictions.to_csv(output_path, index=False)
     logging.info("Predictions saved to: %s", output_path)
 
 

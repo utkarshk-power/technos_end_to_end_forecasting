@@ -6,29 +6,32 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
+import os
 
 # Load YAML parameters
 with open("inference.yaml", "r") as file:
     inference_all = yaml.safe_load(file)
     inference_params = inference_all["lag_data"]
 
-bucket_name = inference_params["bucket_name"]
-api_token = inference_params["api_token"]
-url = inference_params["url"]
-org = inference_params["org"]
-#lag_start = inference_params["lag_start_date"]
-#lag_end = inference_params["lag_end_date"]
+bucket_name = os.getenv("INFLUX_BUCKET_NAME", inference_params["bucket_name"])
+api_token = os.getenv("INFLUX_TOKEN", inference_params["api_token"])
+url = os.getenv("SORACOM_URL", inference_params["url"])
+org = os.getenv("INFLUX_ORG", inference_params["org"])
+lag_start = inference_params["lag_start_date"].replace(" ", "T")
+lag_end = inference_params["lag_end_date"].replace(" ", "T")
+if not lag_start.endswith("Z"):
+    lag_start += "Z"
+if not lag_end.endswith("Z"):
+    lag_end += "Z"
 client = influxdb_client.InfluxDBClient(url=url, token=api_token, org=org)
 query_api = client.query_api()
 fields = inference_params["load_fields"]
 
 fields_filter = " or ".join([f'r["_field"] == "{field}"' for field in fields])
 
-# Let us comment out the query code section
-
 query = f'''
 from(bucket: "{bucket_name}")
-  |> range(start: 2025-12-24T11:00:00Z, stop: 2025-12-24T16:00:00Z)
+  |> range(start: time(v: "{lag_start}"), stop: time(v: "{lag_end}"))
   |> filter(fn: (r) => 
       r["_measurement"] == "Interconnection" or
       r["_measurement"] == "PcsData" or
