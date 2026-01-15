@@ -1,5 +1,6 @@
 # Astro Runtime includes the following pre-installed providers packages: https://www.astronomer.io/docs/astro/runtime-image-architecture#provider-packages
 apache-airflow-providers-docker
+apache-airflow-providers-ssh
 influxdb-client
 joblib
 matplotlib
@@ -10,3 +11,4 @@ PyYAML
 requests-cache
 retry-requests
 xgboost
+scikit-learn

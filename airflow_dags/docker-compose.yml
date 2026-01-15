@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  airflow:
+    image: technos-airflow:edge
+    container_name: refresh-predictions-edge
+    command: ["airflow", "standalone"]
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    env_file:
+      - /opt/airflow/.env
+    volumes:
+      - /opt/airflow/processed:/usr/local/airflow/include/forecasting/data/processed
+      - /opt/airflow/predictions:/usr/local/airflow/include/forecasting/data/predictions
+      - /opt/airflow/logs:/usr/local/airflow/logs

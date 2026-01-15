@@ -1,22 +1,23 @@
-import airflow
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
+import os
 
 
 with DAG('refresh_lag_data_and_prediction_dag',
-         start_date=datetime(2026,1,8),
-         schedule=timedelta(minutes=1),
+         start_date=datetime(2026,1,13),
+         schedule=timedelta(minutes=2),
          catchup=False,
          default_args = { 'retries': 1, 'retry_delay': timedelta(minutes=5)},
          tags = ['forecasting', 'inference', 'docker'],
          ) as dag:
     task_env = {
-        "INFLUX_BUCKET_NAME": "PXC",
-        "INFLUX_TOKEN": "fxrYNTBiuBeHlAs4liTM9nh4p15AbLq_9y-mrduh6qb0lNjXnqOlng9wJJUKDvAFAkHeJ4-2Qmb0UCotfeUsjw==",
-        "SORACOM_URL": "http://57-180-177-155.napter.soracom.io:15068",
-        "INFLUX_ORG": "PXC",
+        "INFLUX_BUCKET_NAME": os.getenv("INFLUX_BUCKET_NAME", ""),
+        "INFLUX_TOKEN": os.getenv("INFLUX_TOKEN", ""),
+        "SORACOM_URL": os.getenv("SORACOM_URL", ""),
+        "INFLUX_ORG": os.getenv("INFLUX_ORG", ""),
     }
+    
     prepare_dirs = BashOperator(
         task_id="prepare_dirs",
         bash_command="mkdir -p /usr/local/airflow/include/forecasting/data/processed /usr/local/airflow/include/forecasting/data/predictions",
